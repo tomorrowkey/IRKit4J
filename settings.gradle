@@ -1,0 +1,1 @@
+include ':IRKit4J-Core', ':IRKit4J-Sample'
