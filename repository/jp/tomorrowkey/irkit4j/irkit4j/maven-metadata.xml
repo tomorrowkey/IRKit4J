@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
   <groupId>jp.tomorrowkey.irkit4j</groupId>
-  <artifactId>IRKit4J-Core</artifactId>
+  <artifactId>irkit4j</artifactId>
   <version>0.0.1</version>
   <versioning>
     <versions>
       <version>0.0.1</version>
     </versions>
-    <lastUpdated>20140405061415</lastUpdated>
+    <lastUpdated>20140405064602</lastUpdated>
   </versioning>
 </metadata>

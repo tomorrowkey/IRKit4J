@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>jp.tomorrowkey.irkit4j</groupId>
-  <artifactId>IRKit4J-Core</artifactId>
+  <artifactId>irkit4j</artifactId>
   <version>0.0.1</version>
   <inceptionYear>2014</inceptionYear>
   <licenses>

@@ -16,14 +16,15 @@ dependencies {
     testCompile 'org.mockito:mockito-all:1.9.+'
 }
 
-group = 'jp.tomorrowkey.irkit4j';
-archiveBaseName = "irkit4j";
-version = '0.0.1';
+def deployTo = new File(rootDir, "repository")
 
 uploadArchives {
     repositories {
         mavenDeployer {
-            repository(url: "file: ${projectDir}/repository")
+            repository url: "file://${deployTo}"
+            pom.groupId = 'jp.tomorrowkey.irkit4j'
+            pom.artifactId = 'irkit4j'
+            pom.version = '0.0.1'
         }
     }
 }
