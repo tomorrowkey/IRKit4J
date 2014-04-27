@@ -132,22 +132,24 @@ public class RemoteIRKit {
         }
     }
 
+    public static StringKeyValue postDevices(String clientKey) throws IOException {
+        return postDevices(clientKey, new HttpClient());
+    }
 
-    static String postDevices(String clientKey, HttpClient httpClient) throws IOException {
+    static StringKeyValue postDevices(String clientKey, HttpClient httpClient) throws IOException {
         if (Strings.isNullOrEmpty(clientKey))
             throw new IllegalArgumentException("clientKey must not be null or empty");
         if (httpClient == null)
             throw new IllegalArgumentException("httpClient must not be null");
 
         try {
-            String url = BASE_URL + "/apps";
+            String url = BASE_URL + "/devices";
             HttpRequest httpRequest = new HttpRequest(HttpRequestMethod.POST, url, new HttpParameter("clientkey", clientKey));
             HttpResponse httpResponse = httpClient.request(httpRequest);
             int statusCode = httpResponse.getStatusCode();
             String content = httpResponse.getContent();
             if (statusCode == HttpStatusCode.OK) {
-                StringKeyValue keyValue = GSON.fromJson(content, StringKeyValue.class);
-                return keyValue.get("message");
+                return GSON.fromJson(content, StringKeyValue.class);
             } else {
                 throw new UnexpectedStatusCodeException(statusCode, content);
             }
