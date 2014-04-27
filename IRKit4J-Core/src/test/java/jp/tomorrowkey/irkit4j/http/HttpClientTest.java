@@ -86,13 +86,12 @@ public class HttpClientTest {
             assertThat(response.getContent(), is("Response"));
         }
         {
-            HttpRequestMethod requestMethod = HttpRequestMethod.GET;
-            HttpParameter[] parameters = new HttpParameter[]{new HttpParameter("key", "value"), new HttpParameter("key2", "value2")};
             String responseContent = "";
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             ByteArrayInputStream inputStream = new ByteArrayInputStream(responseContent.getBytes("utf-8"));
 
             HttpURLConnection httpURLConnection = mock(HttpURLConnection.class);
+            when(httpURLConnection.getDoOutput()).thenReturn(false);
             when(httpURLConnection.getOutputStream()).thenReturn(outputStream);
             when(httpURLConnection.getResponseCode()).thenReturn(-1);
             when(httpURLConnection.getContentLength()).thenReturn(responseContent.length());
@@ -100,13 +99,11 @@ public class HttpClientTest {
 
             HttpClient httpClient = new HttpClient();
             httpClient.httpURLConnection = httpURLConnection;
-            httpClient.request(requestMethod, parameters, "utf-8");
+            httpClient.request("something", "utf-8");
 
             assertThat(outputStream.size(), is(0));
         }
         {
-            HttpRequestMethod requestMethod = HttpRequestMethod.POST;
-            HttpParameter[] parameters = new HttpParameter[]{new HttpParameter("key", "value"), new HttpParameter("key2", "value2")};
             String responseContent = "";
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             ByteArrayInputStream inputStream = new ByteArrayInputStream(responseContent.getBytes("utf-8"));
@@ -120,7 +117,7 @@ public class HttpClientTest {
 
             HttpClient httpClient = new HttpClient();
             httpClient.httpURLConnection = httpURLConnection;
-            httpClient.request(requestMethod, parameters, "utf-8");
+            httpClient.request("key=value&key2=value2", "utf-8");
 
             String expectedString = "key=value&key2=value2";
             assertThat(outputStream.size(), is(expectedString.length()));

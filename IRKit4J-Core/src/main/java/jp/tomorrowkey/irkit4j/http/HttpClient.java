@@ -37,14 +37,12 @@ public class HttpClient {
         HttpRequestMethod method = httpRequest.getHttpRequestMethod();
         String encoding = httpRequest.getEncoding();
         httpURLConnection = newHttpURLConnection(url, method, encoding);
-        return request(httpRequest.getHttpRequestMethod(), httpRequest.getParameters(), httpRequest.getEncoding());
-    }
 
-    @VisibleForTesting
-    HttpResponse request(HttpRequestMethod httpRequestMethod, HttpParameter[] parameters, String encoding) throws IOException {
-        String content = null;
-        if (httpRequestMethod == HttpRequestMethod.POST) {
-            content = HttpParameter.encodeParameters(parameters, encoding);
+        String content = httpRequest.getContent();
+        if (content == null) {
+            content = HttpParameter.encodeParameters(httpRequest.getParameters(), encoding);
+        }
+        if (method == HttpRequestMethod.POST) {
             httpURLConnection.setRequestProperty(HttpHeaders.CONTENT_LENGTH, String.valueOf(content.length()));
         }
         return request(content, encoding);

@@ -114,7 +114,7 @@ public class HttpRequest {
         return encoding;
     }
 
-    public String content() {
+    public String getContent() {
         return content;
     }
 }
