@@ -112,6 +112,7 @@ public class HttpClientTest {
             ByteArrayInputStream inputStream = new ByteArrayInputStream(responseContent.getBytes("utf-8"));
 
             HttpURLConnection httpURLConnection = mock(HttpURLConnection.class);
+            when(httpURLConnection.getDoOutput()).thenReturn(true);
             when(httpURLConnection.getOutputStream()).thenReturn(outputStream);
             when(httpURLConnection.getResponseCode()).thenReturn(-1);
             when(httpURLConnection.getContentLength()).thenReturn(responseContent.length());

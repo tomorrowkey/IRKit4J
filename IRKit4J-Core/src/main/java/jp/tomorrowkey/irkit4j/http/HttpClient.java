@@ -17,7 +17,6 @@
 package jp.tomorrowkey.irkit4j.http;
 
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Strings;
 import com.google.common.io.Closeables;
 import com.google.common.net.HttpHeaders;
 
@@ -46,6 +45,7 @@ public class HttpClient {
         String content = null;
         if (httpRequestMethod == HttpRequestMethod.POST) {
             content = HttpParameter.encodeParameters(parameters, encoding);
+            httpURLConnection.setRequestProperty(HttpHeaders.CONTENT_LENGTH, String.valueOf(content.length()));
         }
         return request(content, encoding);
     }
@@ -53,7 +53,7 @@ public class HttpClient {
     @VisibleForTesting
     HttpResponse request(String content, String encoding) throws IOException {
         httpURLConnection.connect();
-        if (!Strings.isNullOrEmpty(content)) {
+        if (httpURLConnection.getDoOutput()) {
             byte[] rawBytes = content.getBytes(encoding);
             write(httpURLConnection.getOutputStream(), rawBytes);
         }
