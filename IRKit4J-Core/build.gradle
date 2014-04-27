@@ -24,7 +24,7 @@ uploadArchives {
             repository url: "file://${deployTo}"
             pom.groupId = 'jp.tomorrowkey.irkit4j'
             pom.artifactId = 'irkit4j'
-            pom.version = '0.0.1'
+            pom.version = '0.0.2'
         }
     }
 }
