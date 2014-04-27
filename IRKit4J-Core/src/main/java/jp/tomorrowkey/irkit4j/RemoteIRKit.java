@@ -214,4 +214,35 @@ public class RemoteIRKit {
         }
     }
 
+    public static String postDoor(String clientKey, String deviceId) throws IOException {
+        return postDoor(clientKey, deviceId, new HttpClient());
+    }
+
+    static String postDoor(String clientKey, String deviceId, HttpClient httpClient) throws IOException {
+        if (Strings.isNullOrEmpty(clientKey))
+            throw new IllegalAccessError("clientKey must not be null or empty");
+        if (Strings.isNullOrEmpty(deviceId))
+            throw new IllegalAccessError("deviceId must not be null or empty");
+        if (httpClient == null)
+            throw new IllegalAccessError("httpClient must not be null");
+
+        try {
+            String url = BASE_URL + "/door";
+            HttpRequest httpRequest = new HttpRequest(HttpRequestMethod.POST, url,
+                    new HttpParameter("clientkey", clientKey),
+                    new HttpParameter("deviceid", deviceId)
+            );
+            HttpResponse httpResponse = httpClient.request(httpRequest);
+            int statusCode = httpResponse.getStatusCode();
+            String content = httpResponse.getContent();
+            if (statusCode == HttpStatusCode.OK) {
+                return GSON.fromJson(content, StringKeyValue.class).get("hostname");
+            } else {
+                throw new UnexpectedStatusCodeException(statusCode, content);
+            }
+        } finally {
+            httpClient.disconnect();
+        }
+    }
+
 }
