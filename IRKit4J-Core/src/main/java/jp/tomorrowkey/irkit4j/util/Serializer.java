@@ -30,6 +30,16 @@ public class Serializer {
         public int getValue() {
             return value;
         }
+
+        public static WifiSecurity valueOf(int value) {
+            WifiSecurity[] wifiSecurities = WifiSecurity.values();
+            for (WifiSecurity wifiSecurity : wifiSecurities) {
+                if (wifiSecurity.getValue() == value)
+                    return wifiSecurity;
+            }
+
+            throw new IllegalArgumentException("Unknown value, value=" + value);
+        }
     }
 
     private static final int CRC8POLY = 0x31; // = X^8+X^5+X^4+X^0
